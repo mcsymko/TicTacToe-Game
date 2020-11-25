@@ -124,24 +124,13 @@ void Game::updateTurn()
 	//Put O if its turn of player O
 	else if (this->turnOfPlayer == 'O')
 	{
-		int buf1 = rand() % 2;
-		int buf2 = rand() % 2;
+		int buf1 = rand() % 3;
+		int buf2 = rand() % 3;
 
 		if (this->board[buf1][buf2] == '1')
 		{
 			this->board[buf1][buf2] = 'O';
 			this->turnOfPlayer = 'X';
-
-			std::cout << std::endl << std::endl << std::endl << std::endl;
-			std::cout << "BOARD:" << std::endl;
-			for (int i = 0; i < 3; ++i)
-			{
-				for (int j = 0; j < 3; ++j)
-				{
-					std::cout << this->board[i][j] << " ";
-				}
-				std::cout << std::endl;
-			}
 		}
 	}
 	else
