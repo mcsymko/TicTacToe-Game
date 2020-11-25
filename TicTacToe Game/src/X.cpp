@@ -20,6 +20,12 @@ X::~X()
 
 }
 
+//Accessors
+void X::setPosition(sf::Vector2f pos)
+{
+	this->sprite.setPosition(pos);
+}
+
 //Functions
 void X::update()
 {

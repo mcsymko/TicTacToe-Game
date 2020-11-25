@@ -13,6 +13,9 @@ public:
 	O();
 	~O();
 
+	//Accessors
+	void setPosition(sf::Vector2f pos);
+
 	//Functions
 	void update();
 	void render(sf::RenderTarget& target);

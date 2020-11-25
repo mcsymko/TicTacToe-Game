@@ -13,6 +13,9 @@ public:
 	X();
 	~X();
 
+	//Accessors
+	void setPosition(sf::Vector2f pos);
+
 	//Functions
 	void update();
 	void render(sf::RenderTarget& target);

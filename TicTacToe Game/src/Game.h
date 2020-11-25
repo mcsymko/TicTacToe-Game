@@ -10,12 +10,20 @@ private:
 	sf::RenderWindow window;
 	sf::Event ev;
 
+	//Timer
+	sf::Clock clock;
+	float timer;
+	float delay;
+
 	//Creating 9 rectangles to check if mouse is clicked on them
 	sf::RectangleShape rects[3][3];	
 
 	//Players
-	X playerX;
-	O playerO;
+	X* playerX;
+	O* playerO;
+
+	//Positions
+	sf::Vector2f positions[3][3];
 
 	//Board
 	char board[3][3];
@@ -36,6 +44,7 @@ private:
 	void initBackground();
 	void initRectangles();
 	void initBoard();
+	void initPositions();
 public:
 	//Con/des
 	Game();
@@ -44,11 +53,13 @@ public:
 	//Functions
 	void updatePollEvents();
 	void updateMousePositions();
-	void updateTurn();
+	void updateTurnX();
+	void updateTurnO();
 	void update();
 
 	void renderBackground();
 	void renderRects();
+	void renderPlayer();
 	void render();
 
 	void run();

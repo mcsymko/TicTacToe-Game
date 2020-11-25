@@ -6,6 +6,12 @@ void Game::initVariables()
 {
 	this->turnOfPlayer = 'X';
 	this->mouseHeld = false;
+
+	this->playerX = new X;
+	this->playerO = new O;
+	
+	this->timer = 0;
+	this->delay = 1.f;
 }
 
 void Game::initWindow()
@@ -55,6 +61,7 @@ void Game::initRectangles()
 
 void Game::initBoard()
 {
+	//Initializing board
 	for (size_t i = 0; i < 3; i++)
 	{
 		for (size_t j = 0; j < 3; j++)
@@ -62,6 +69,34 @@ void Game::initBoard()
 			this->board[i][j] = '1';
 		}
 	}
+}
+
+void Game::initPositions()
+{
+	//65 pixels is half size of sprite either in width and height
+	this->positions[0][1].x = 256.f - 65.f;
+	this->positions[0][1].y = 70.f - 65.f;
+
+	this->positions[0][2].x = 442.f - 65.f;
+	this->positions[0][2].y = 70.f - 65.f;
+
+	this->positions[1][0].x = 70.f - 65.f;
+	this->positions[1][0].y = 256.f - 65.f;
+
+	this->positions[1][1].x = 256.f - 65.f;
+	this->positions[1][1].y = 256.f - 65.f;
+
+	this->positions[1][2].x = 442.f - 65.f;
+	this->positions[1][2].y = 256.f - 65.f;
+
+	this->positions[2][0].x = 70.f - 65.f;
+	this->positions[2][0].y = 442.f - 65.f;
+
+	this->positions[2][1].x = 256.f - 65.f;
+	this->positions[2][1].y = 442.f - 65.f;
+
+	this->positions[2][2].x = 442.f - 65.f;
+	this->positions[2][2].y = 442.f - 65.f;
 }
 
 //Con/des
@@ -72,11 +107,13 @@ Game::Game()
 	this->initBackground();
 	this->initRectangles();
 	this->initBoard();
+	this->initPositions();
 }
 
 Game::~Game()
 {
-
+	delete this->playerX;
+	delete this->playerO;
 }
 
 //Functions
@@ -97,7 +134,7 @@ void Game::updateMousePositions()
 	this->mousePosView = this->window.mapPixelToCoords(this->mousePosWindow);
 }
 
-void Game::updateTurn()
+void Game::updateTurnX()
 {
 	//Put X if its turn of player X
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->turnOfPlayer == 'X')
@@ -120,22 +157,32 @@ void Game::updateTurn()
 			}
 		}
 	}
+	else
+	{
+		this->mouseHeld = false;
+	}
+}
 
+void Game::updateTurnO()
+{
 	//Put O if its turn of player O
-	else if (this->turnOfPlayer == 'O')
+	if (this->turnOfPlayer == 'O')
 	{
 		int buf1 = rand() % 3;
 		int buf2 = rand() % 3;
 
 		if (this->board[buf1][buf2] == '1')
 		{
-			this->board[buf1][buf2] = 'O';
-			this->turnOfPlayer = 'X';
+			float time = clock.getElapsedTime().asSeconds();
+			this->clock.restart();
+			this->timer += time;
+			if (this->timer > this->delay)
+			{
+				this->timer = 0;
+				this->board[buf1][buf2] = 'O';
+				this->turnOfPlayer = 'X';
+			}
 		}
-	}
-	else
-	{
-		this->mouseHeld = false;
 	}
 }
 
@@ -143,7 +190,8 @@ void Game::update()
 {
 	this->updatePollEvents();
 	this->updateMousePositions();
-	this->updateTurn();
+	this->updateTurnX();
+	this->updateTurnO();
 }
 
 void Game::renderBackground()
@@ -162,11 +210,32 @@ void Game::renderRects()
 	}
 }
 
+void Game::renderPlayer()
+{
+	for (size_t i = 0; i < 3; i++)
+	{
+		for (size_t j = 0; j < 3; j++)
+		{
+			if (board[i][j] == 'X')
+			{
+				this->playerX->setPosition(positions[i][j]);
+				this->playerX->render(this->window);
+			}
+			else if (board[i][j] == 'O')
+			{
+				this->playerO->setPosition(positions[i][j]);
+				this->playerO->render(this->window);
+			}
+		}
+	}
+}
+
 void Game::render()
 {
 	this->window.clear();
 	this->renderBackground();
 	this->renderRects();
+	this->renderPlayer();
 
 	this->window.display();
 }
