@@ -3,7 +3,8 @@
 
 int main()
 {
-	Game game;
+	srand(static_cast<unsigned>(time(NULL)));
 
+	Game game;
 	game.run();
 }
