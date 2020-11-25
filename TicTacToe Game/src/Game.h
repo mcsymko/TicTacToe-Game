@@ -35,6 +35,7 @@ private:
 	void initWindow();
 	void initBackground();
 	void initRectangles();
+	void initBoard();
 public:
 	//Con/des
 	Game();

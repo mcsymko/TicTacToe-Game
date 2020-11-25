@@ -4,8 +4,8 @@
 //Private functions
 void Game::initVariables()
 {
-	this->mouseHeld = false;
 	this->turnOfPlayer = 'X';
+	this->mouseHeld = false;
 }
 
 void Game::initWindow()
@@ -53,6 +53,17 @@ void Game::initRectangles()
 	
 }
 
+void Game::initBoard()
+{
+	for (size_t i = 0; i < 3; i++)
+	{
+		for (size_t j = 0; j < 3; j++)
+		{
+			this->board[i][j] = '1';
+		}
+	}
+}
+
 //Con/des
 Game::Game()
 {
@@ -60,6 +71,7 @@ Game::Game()
 	this->initWindow();
 	this->initBackground();
 	this->initRectangles();
+	this->initBoard();
 }
 
 Game::~Game()
@@ -92,12 +104,13 @@ void Game::updateTurn()
 	{
 		if (!this->mouseHeld)
 		{
-			this->mouseHeld = true;	
+			this->mouseHeld = true;
+
 			for (size_t i = 0; i < 3; ++i)
 			{
 				for (size_t j = 0; j < 3; ++j)
 				{
-					if (this->board[i][j] == ' ' && this->rects[i][j].getGlobalBounds().contains(this->mousePosView))
+					if (this->rects[i][j].getGlobalBounds().contains(this->mousePosView) && this->board[i][j] == '1')
 					{
 						this->board[i][j] = 'X';
 
@@ -106,31 +119,29 @@ void Game::updateTurn()
 				}
 			}
 		}
-
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				std::cout << this->board[i][j] << " ";
-			}
-			std::cout << std::endl;
-		}
 	}
+
+	//Put O if its turn of player O
 	else if (this->turnOfPlayer == 'O')
 	{
 		int buf1 = rand() % 2;
 		int buf2 = rand() % 2;
 
-		if (this->board[buf1][buf2] != 'X' && this->board[buf1][buf2] != 'O')
-			this->board[buf1][buf2] = 'O';
-
-		for (int i = 0; i < 3; ++i)
+		if (this->board[buf1][buf2] == '1')
 		{
-			for (int j = 0; j < 3; ++j)
+			this->board[buf1][buf2] = 'O';
+			this->turnOfPlayer = 'X';
+
+			std::cout << std::endl << std::endl << std::endl << std::endl;
+			std::cout << "BOARD:" << std::endl;
+			for (int i = 0; i < 3; ++i)
 			{
-				std::cout << this->board[i][j] << " ";
+				for (int j = 0; j < 3; ++j)
+				{
+					std::cout << this->board[i][j] << " ";
+				}
+				std::cout << std::endl;
 			}
-			std::cout << std::endl;
 		}
 	}
 	else
