@@ -10,7 +10,8 @@ private:
 	sf::RenderWindow window;
 	sf::Event ev;
 
-	//Timer
+	//Timers
+	//Timer for smooth spawn of player O
 	sf::Clock clock;
 	float timer;
 	float delay;
@@ -51,6 +52,8 @@ public:
 	~Game();
 
 	//Functions
+	void checkWin();
+
 	void updatePollEvents();
 	void updateMousePositions();
 	void updateTurnX();

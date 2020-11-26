@@ -116,6 +116,106 @@ Game::~Game()
 	delete this->playerO;
 }
 
+void Game::checkWin()
+{
+	if (this->board[0][0] == 'X' && this->board[0][1] == 'X' && this->board[0][2] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][0] == 'O' && this->board[0][1] == 'O' && this->board[0][2] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[1][0] == 'X' && this->board[1][1] == 'X' && this->board[1][2] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[1][0] == 'O' && this->board[1][1] == 'O' && this->board[1][2] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[2][0] == 'X' && this->board[2][1] == 'X' && this->board[2][2] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[2][0] == 'O' && this->board[2][1] == 'O' && this->board[2][2] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][0] == 'X' && this->board[1][0] == 'X' && this->board[2][0] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][0] == 'O' && this->board[1][0] == 'O' && this->board[2][0] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][1] == 'X' && this->board[1][1] == 'X' && this->board[2][1] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][1] == 'O' && this->board[1][1] == 'O' && this->board[2][1] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][2] == 'X' && this->board[1][2] == 'X' && this->board[2][2] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][2] == 'O' && this->board[1][2] == 'O' && this->board[2][2] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][0] == 'X' && this->board[1][1] == 'X' && this->board[2][2] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][0] == 'O' && this->board[1][1] == 'O' && this->board[2][2] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][2] == 'X' && this->board[1][1] == 'X' && this->board[2][0] == 'X')
+	{
+		this->render();
+		std::cout << "player X won" << std::endl;
+		this->window.close();
+	}
+	else if (this->board[0][2] == 'O' && this->board[1][1] == 'O' && this->board[2][0] == 'O')
+	{
+		this->render();
+		std::cout << "player O won" << std::endl;
+		this->window.close();
+	}
+}
+
 //Functions
 void Game::updatePollEvents()
 {
@@ -156,6 +256,8 @@ void Game::updateTurnX()
 				}
 			}
 		}
+		//Start delay when X made a turn
+		this->clock.restart();
 	}
 	else
 	{
@@ -168,6 +270,8 @@ void Game::updateTurnO()
 	//Put O if its turn of player O
 	if (this->turnOfPlayer == 'O')
 	{
+		this->mouseHeld = true;
+
 		int buf1 = rand() % 3;
 		int buf2 = rand() % 3;
 
@@ -192,6 +296,7 @@ void Game::update()
 	this->updateMousePositions();
 	this->updateTurnX();
 	this->updateTurnO();
+	this->checkWin();
 }
 
 void Game::renderBackground()
@@ -201,6 +306,7 @@ void Game::renderBackground()
 
 void Game::renderRects()
 {
+	//Draw rects which checks if mouse is pressed
 	for (size_t i = 0; i < 3; ++i)
 	{
 		for (size_t j = 0; j < 3; ++j)
