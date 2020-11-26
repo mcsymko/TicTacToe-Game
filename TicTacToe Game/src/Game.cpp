@@ -20,11 +20,20 @@ void Game::initWindow()
 	this->window.setFramerateLimit(60);
 }
 
-void Game::initBackground()
+void Game::initGUI()
 {
+	//Background board
 	this->bgTexture.loadFromFile("Textures/background.png");
 
 	this->background.setTexture(this->bgTexture);
+
+	//End game text
+	if (!this->font.loadFromFile("Fonts/Texturina-VariableFont_opsz,wght.ttf"))
+		std::cout << "ERROR::GAME::INITGUI::Could not load font" << std::endl;
+
+	this->gameOverText.setFont(this->font);
+	this->gameOverText.setFillColor(sf::Color::Black);
+	this->gameOverText.setCharacterSize(60);
 }
 
 void Game::initRectangles()
@@ -73,7 +82,7 @@ void Game::initBoard()
 
 void Game::initPositions()
 {
-	//65 pixels is half size of sprite either in width and height
+	//Positioning the sprites. 65 pixels is half size of sprite either in width and height
 	this->positions[0][1].x = 256.f - 65.f;
 	this->positions[0][1].y = 70.f - 65.f;
 
@@ -99,12 +108,38 @@ void Game::initPositions()
 	this->positions[2][2].y = 442.f - 65.f;
 }
 
+void Game::initEndGameText(const char& ch)
+{
+	//Game over text
+	switch (ch)
+	{
+	case 'X':
+		this->gameOverText.setString("Player X won!");
+		this->gameOverText.setPosition(sf::Vector2f(
+			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
+			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
+		break;
+	case 'O':
+		this->gameOverText.setString("Player O won!");
+		this->gameOverText.setPosition(sf::Vector2f(
+			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
+			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
+		break;
+	case 'D':
+		this->gameOverText.setString("DRAW");
+		this->gameOverText.setPosition(sf::Vector2f(
+			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
+			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
+		break;
+	}
+}
+
 //Con/des
 Game::Game()
 {
 	this->initVariables();
 	this->initWindow();
-	this->initBackground();
+	this->initGUI();
 	this->initRectangles();
 	this->initBoard();
 	this->initPositions();
@@ -118,101 +153,123 @@ Game::~Game()
 
 void Game::checkWin()
 {
+	//Win check
 	if (this->board[0][0] == 'X' && this->board[0][1] == 'X' && this->board[0][2] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][0] == 'O' && this->board[0][1] == 'O' && this->board[0][2] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[1][0] == 'X' && this->board[1][1] == 'X' && this->board[1][2] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[1][0] == 'O' && this->board[1][1] == 'O' && this->board[1][2] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[2][0] == 'X' && this->board[2][1] == 'X' && this->board[2][2] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[2][0] == 'O' && this->board[2][1] == 'O' && this->board[2][2] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][0] == 'X' && this->board[1][0] == 'X' && this->board[2][0] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][0] == 'O' && this->board[1][0] == 'O' && this->board[2][0] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][1] == 'X' && this->board[1][1] == 'X' && this->board[2][1] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][1] == 'O' && this->board[1][1] == 'O' && this->board[2][1] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][2] == 'X' && this->board[1][2] == 'X' && this->board[2][2] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][2] == 'O' && this->board[1][2] == 'O' && this->board[2][2] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][0] == 'X' && this->board[1][1] == 'X' && this->board[2][2] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][0] == 'O' && this->board[1][1] == 'O' && this->board[2][2] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][2] == 'X' && this->board[1][1] == 'X' && this->board[2][0] == 'X')
 	{
 		this->render();
-		std::cout << "player X won" << std::endl;
-		this->window.close();
+		this->result = 'X';
+		this->initEndGameText(this->result);
 	}
 	else if (this->board[0][2] == 'O' && this->board[1][1] == 'O' && this->board[2][0] == 'O')
 	{
 		this->render();
-		std::cout << "player O won" << std::endl;
-		this->window.close();
+		this->result = 'O';
+		this->initEndGameText(this->result);
+	}
+
+	//Draw check
+	else
+	{
+		int buf = 0;
+		
+		for (size_t i = 0; i < 3; i++)
+		{
+			for (size_t j = 0; j < 3; j++)
+			{
+				if (this->board[i][j] == '1')
+					buf++;
+			}
+		}
+		if (buf == 0)
+		{
+			this->render();
+			this->result = 'D';
+			this->initEndGameText(this->result);
+		}
 	}
 }
 
@@ -292,7 +349,6 @@ void Game::updateTurnO()
 
 void Game::update()
 {
-	this->updatePollEvents();
 	this->updateMousePositions();
 	this->updateTurnX();
 	this->updateTurnO();
@@ -336,13 +392,22 @@ void Game::renderPlayer()
 	}
 }
 
+void Game::renderEndGameText()
+{
+	if (this->result == 'X' || this->result == 'O' || this->result == 'D')
+	{
+		this->window.clear(sf::Color::White);
+		this->window.draw(this->gameOverText);
+	}
+}
+
 void Game::render()
 {
 	this->window.clear();
 	this->renderBackground();
 	this->renderRects();
 	this->renderPlayer();
-
+	this->renderEndGameText();
 	this->window.display();
 }
 
@@ -350,7 +415,11 @@ void Game::run()
 {
 	while (this->window.isOpen())
 	{
-		this->update();
-		this->render();
+		this->updatePollEvents();
+		if (this->result != 'X' && this->result != 'O' && this->result != 'D')
+		{
+			this->update();
+			this->render();
+		}
 	}
 }

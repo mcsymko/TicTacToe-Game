@@ -34,6 +34,11 @@ private:
 	sf::Texture bgTexture;
 	sf::Sprite background;
 
+	//Endgame text
+	sf::Text gameOverText;
+	sf::Font font;
+	char result;
+
 	//Mouse positions
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
@@ -42,10 +47,11 @@ private:
 	//Private functions
 	void initVariables();
 	void initWindow();
-	void initBackground();
+	void initGUI();
 	void initRectangles();
 	void initBoard();
 	void initPositions();
+	void initEndGameText(const char& ch);
 public:
 	//Con/des
 	Game();
@@ -63,6 +69,7 @@ public:
 	void renderBackground();
 	void renderRects();
 	void renderPlayer();
+	void renderEndGameText();
 	void render();
 
 	void run();
