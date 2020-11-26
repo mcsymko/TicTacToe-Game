@@ -72,5 +72,6 @@ public:
 	void renderEndGameText();
 	void render();
 
+	//Main run function
 	void run();
 };

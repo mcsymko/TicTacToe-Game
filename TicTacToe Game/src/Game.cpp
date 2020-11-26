@@ -27,17 +27,21 @@ void Game::initGUI()
 
 	this->background.setTexture(this->bgTexture);
 
-	//End game text
+	//End game text initialization
 	if (!this->font.loadFromFile("Fonts/Texturina-VariableFont_opsz,wght.ttf"))
 		std::cout << "ERROR::GAME::INITGUI::Could not load font" << std::endl;
 
 	this->gameOverText.setFont(this->font);
 	this->gameOverText.setFillColor(sf::Color::Black);
 	this->gameOverText.setCharacterSize(60);
+	this->gameOverText.setPosition(sf::Vector2f(
+		this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
+		this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
 }
 
 void Game::initRectangles()
 {
+	//Rectangles for mouseclicking at some position
 	this->rects[0][0].setSize(sf::Vector2f(140.f, 140.f));
 	this->rects[0][0].setPosition(sf::Vector2f());
 
@@ -115,21 +119,12 @@ void Game::initEndGameText(const char& ch)
 	{
 	case 'X':
 		this->gameOverText.setString("Player X won!");
-		this->gameOverText.setPosition(sf::Vector2f(
-			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
-			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
 		break;
 	case 'O':
 		this->gameOverText.setString("Player O won!");
-		this->gameOverText.setPosition(sf::Vector2f(
-			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
-			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
 		break;
 	case 'D':
 		this->gameOverText.setString("DRAW");
-		this->gameOverText.setPosition(sf::Vector2f(
-			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
-			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
 		break;
 	}
 }
@@ -151,6 +146,7 @@ Game::~Game()
 	delete this->playerO;
 }
 
+//Functions
 void Game::checkWin()
 {
 	//Win check
@@ -273,7 +269,6 @@ void Game::checkWin()
 	}
 }
 
-//Functions
 void Game::updatePollEvents()
 {
 	while (this->window.pollEvent(this->ev))
@@ -318,6 +313,7 @@ void Game::updateTurnX()
 	}
 	else
 	{
+		//Banning mouseholding
 		this->mouseHeld = false;
 	}
 }
@@ -334,6 +330,7 @@ void Game::updateTurnO()
 
 		if (this->board[buf1][buf2] == '1')
 		{
+			//Delayed spawning of player O
 			float time = clock.getElapsedTime().asSeconds();
 			this->clock.restart();
 			this->timer += time;
@@ -374,6 +371,7 @@ void Game::renderRects()
 
 void Game::renderPlayer()
 {
+	//Draw player's sprite if mouseclicked by X or spawned by O
 	for (size_t i = 0; i < 3; i++)
 	{
 		for (size_t j = 0; j < 3; j++)
@@ -394,6 +392,7 @@ void Game::renderPlayer()
 
 void Game::renderEndGameText()
 {
+	//If there is a winner ---> draw endgame text
 	if (this->result == 'X' || this->result == 'O' || this->result == 'D')
 	{
 		this->window.clear(sf::Color::White);
@@ -416,6 +415,8 @@ void Game::run()
 	while (this->window.isOpen())
 	{
 		this->updatePollEvents();
+
+		//Stop doing something if game is over
 		if (this->result != 'X' && this->result != 'O' && this->result != 'D')
 		{
 			this->update();
