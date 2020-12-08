@@ -34,9 +34,6 @@ void Game::initGUI()
 	this->gameOverText.setFont(this->font);
 	this->gameOverText.setFillColor(sf::Color::Black);
 	this->gameOverText.setCharacterSize(60);
-	this->gameOverText.setPosition(sf::Vector2f(
-		this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2,
-		this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height));
 }
 
 void Game::initRectangles()
@@ -119,12 +116,21 @@ void Game::initEndGameText(const char& ch)
 	{
 	case 'X':
 		this->gameOverText.setString("Player X won!");
+		this->gameOverText.setPosition(sf::Vector2f(
+			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2.f,
+			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height / 2.f));
 		break;
 	case 'O':
 		this->gameOverText.setString("Player O won!");
+		this->gameOverText.setPosition(sf::Vector2f(
+			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2.f,
+			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height / 2.f));
 		break;
 	case 'D':
 		this->gameOverText.setString("DRAW");
+		this->gameOverText.setPosition(sf::Vector2f(
+			this->window.getSize().x / 2.f - this->gameOverText.getGlobalBounds().width / 2.f,
+			this->window.getSize().y / 2.f - this->gameOverText.getGlobalBounds().height / 2.f));
 		break;
 	}
 }
