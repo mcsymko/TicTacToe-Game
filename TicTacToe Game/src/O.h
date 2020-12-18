@@ -1,13 +1,6 @@
 #pragma once
 class O
 {
-private:
-	//Variables
-	sf::Texture texture;
-	sf::Sprite sprite;
-
-	//Private functions
-	void initSprite();
 public:
 	//Con/des
 	O();
@@ -19,5 +12,13 @@ public:
 	//Functions
 	void update();
 	void render(sf::RenderTarget& target);
+
+private:
+	//Variables
+	sf::Texture texture;
+	sf::Sprite sprite;
+
+	//Private functions
+	void initSprite();
 };
 

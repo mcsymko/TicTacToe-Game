@@ -5,6 +5,39 @@
 
 class Game
 {
+public:
+	//Con/des
+	Game();
+	~Game();
+
+	//Functions
+	void checkWin();
+
+	void updatePollEvents();
+	void updateMousePositions();
+	void updateTurnX();
+	void updateTurnO();
+	void update();
+
+	void renderBackground();
+	void renderRects();
+	void renderPlayer();
+	void renderEndGameText();
+	void render();
+
+	//Main run function
+	void run();
+
+private:
+	//Private functions
+	void initVariables();
+	void initWindow();
+	void initGUI();
+	void initRectangles();
+	void initBoard();
+	void initPositions();
+	void initEndGameText(const char& ch);
+
 private:
 	//Variables
 	sf::RenderWindow window;
@@ -43,35 +76,4 @@ private:
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 	bool mouseHeld;
-
-	//Private functions
-	void initVariables();
-	void initWindow();
-	void initGUI();
-	void initRectangles();
-	void initBoard();
-	void initPositions();
-	void initEndGameText(const char& ch);
-public:
-	//Con/des
-	Game();
-	~Game();
-
-	//Functions
-	void checkWin();
-
-	void updatePollEvents();
-	void updateMousePositions();
-	void updateTurnX();
-	void updateTurnO();
-	void update();
-
-	void renderBackground();
-	void renderRects();
-	void renderPlayer();
-	void renderEndGameText();
-	void render();
-
-	//Main run function
-	void run();
 };
